@@ -14,7 +14,7 @@ import {
 
 import TWEEN from '@tweenjs/tween.js';
 
-import Dot from '../res/dot.png';
+import Dot from '../res/soski.png';
 import {animateFrame} from "../util/TweenUtil";
 
 export default class Particle {
@@ -35,26 +35,43 @@ export default class Particle {
       alphaTest: 0.3
     });
 
-    // 绿色材料
-    const greenParticleMaterial = new MeshBasicMaterial({
-      color: 0x52c41a,
-      map: new TextureLoader().load(Dot),
-      alphaTest: 0.3
-    });
+    // // 绿色材料
+    // const greenParticleMaterial = new MeshBasicMaterial({
+    //   color:  "#" + Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0"),
+    //   map: new TextureLoader().load(Dot),
+    //   alphaTest: 0.3
+    // });
+
+    // // 粉色材料
+    // const pinkParticleMaterial = new MeshBasicMaterial({
+    //   color: "#" + Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0"),
+    //   map: new TextureLoader().load(Dot),
+    //   alphaTest: 0.3
+    // });
+
+
     // 粒子的大小为 2 * 2
-    const particleGeometry = new PlaneGeometry(2, 2);
+    const particleGeometry = new PlaneGeometry(3.8, 3.8);
 
     // 生成白色粒子
-    for (let i = 0; i < PARTICLE_NUM/2; ++i) {
+    for (let i = 0; i < PARTICLE_NUM; ++i) {
       const particle = new Mesh(particleGeometry, whiteParticleMaterial);
       this.particles.push(particle);
     }
 
-    // 生成绿色粒子
-    for (let i = 0; i < PARTICLE_NUM/2; ++i) {
-      const particle = new Mesh(particleGeometry, greenParticleMaterial);
-      this.particles.push(particle);
-    }
+    // // 生成绿色粒子
+    // for (let i = 0; i < PARTICLE_NUM/3; ++i) {
+    //   const particle = new Mesh(particleGeometry, greenParticleMaterial);
+    //   this.particles.push(particle);
+    // }
+
+    // // 生成粉色粒子
+    // for (let i = 0; i < PARTICLE_NUM/3; ++i) {
+    //   const particle = new Mesh(particleGeometry, pinkParticleMaterial);
+    //   this.particles.push(particle);
+    // }
+
+    
 
     // 调整粒子的朝向,和相机的一致
     for (let i = 0; i < PARTICLE_NUM; ++i) {
@@ -149,7 +166,7 @@ export default class Particle {
 
   // 粒子散开效果
   scatter() {
-    for (let i = 0; i < PARTICLE_NUM/2; ++i) {
+    for (let i = 0; i < PARTICLE_NUM; ++i) {
       this.particles[i].scattering = true;
       this.particles[i].gathering = false;
       this.scatterParticles(this.particles[i]);

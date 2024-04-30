@@ -47,7 +47,7 @@ class LittleMan {
     this.trunkHeight = 0;
 
     // 以下四个数据记录了蓄力压缩时的参数，用于回弹
-    this.trunkScaleY = 1;
+    this.trunkScaleY = 2;
     this.headYPosition = LITTLE_MAN_HEIGHT;
     this.trunkScaleXZ = 1;
     this.boxScaleY = 1;
@@ -109,6 +109,7 @@ class LittleMan {
     // 向上移动到和球体相切
     trunkCenterGeometry.translate(0, trunkHeight / 8 * 7, 0);
 
+
     // 下方圆柱
     const trunkBottomGeometry = new CylinderGeometry(
       LITTLE_MAN_WIDTH/2 * .8,
@@ -127,8 +128,11 @@ class LittleMan {
 
     this.trunk = new Mesh(trunkGeometry, this.materail);
     this.trunk.castShadow = true;
+
     // 躯干能接收头部的阴影
     this.trunk.receiveShadow = true;
+
+
   }
 
   // 身体

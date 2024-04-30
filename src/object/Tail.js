@@ -67,7 +67,7 @@ export default class Tail {
 
     // 白色带透明度
     this.material = new MeshBasicMaterial({
-      color: 0xffffff,
+      color: "#" + Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0"),
       side: DoubleSide,
       transparent: true,
       opacity: 0.6
