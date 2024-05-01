@@ -24,7 +24,7 @@ export default class ExpressBox extends Box {
     // });
 
     const material = new MeshLambertMaterial({
-      map: new TextureLoader().load(images),
+      map: new TextureLoader().load(express),
     });
 
     geometry.translate(0, this.height/2, 0);

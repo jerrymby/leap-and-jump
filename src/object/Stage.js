@@ -89,7 +89,7 @@ export default class Stage {
     texture.wrapS = texture.wrapT = RepeatWrapping;
     //texture.wrapS = THREE.RepeatWrapping;
     //texture.wrapT = THREE.RepeatWrapping;
-    //texture.repeat.set( 2, 2 );
+    texture.repeat.set( 2, 2 );
     
     // 纹理对象Texture赋值给场景对象的背景属性.background
     this.scene.background = texture;
@@ -222,9 +222,9 @@ export default class Stage {
       requestAnimationFrame(animate);
       renderer.render(this.scene, this.camera);
       // 更新纹理的偏移实现移动效果
-      if (this.backgroundTexture) {
-        this.backgroundTexture.offset.x += 1; // 调整这些值以改变移动速度
-        this.backgroundTexture.offset.y += 1;
+      if (this.scene) {
+        this.scene.offset.x += 1; // 调整这些值以改变移动速度
+        this.scene.offset.y += 1;
       }
     renderer.render(scene, camera);
       if (DEV) {
