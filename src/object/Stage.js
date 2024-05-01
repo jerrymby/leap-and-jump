@@ -12,7 +12,9 @@ import {
   BoxHelper,
   Vector2,
   TextureLoader,
-  RepeatWrapping
+  RepeatWrapping,
+  mbientLight, SpotLight,
+  HemisphereLight
 } from 'three';
 
 import {
@@ -111,17 +113,18 @@ export default class Stage {
     // ShadowMaterial 阴影材质, 此材质可以接收阴影
     // transparent： 透明，在非透明对象之后渲染
     // opacity: 透明度
-    const material = new ShadowMaterial({ transparent: true, opacity: 0.5});
-    /*
-    const texture = new THREE.TextureLoader().load(floor); 
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(16, 16);
-    const material = new THREE.ShadowMaterial({
+    //const material = new ShadowMaterial({ transparent: true, opacity: 0.5});
+    const textureLoader = new TextureLoader();
+    const texture = textureLoader.load(floor);
+    texture.wrapS = texture.wrapT = RepeatWrapping;
+    //texture.wrapS = THREE.RepeatWrapping;
+    //texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set( 2, 2 );
+    const material = new ShadowMaterial({
     map: texture,
     transparent: true,
     opacity: 0.50
-    });*/
+    });
     this.plane = new Mesh(geometry, material);
     // 接收阴影
     this.plane.receiveShadow = true;
@@ -141,7 +144,12 @@ export default class Stage {
   createLight() {
     // 环境光会均匀的照亮场景中的所有物体，它不能用来投射阴影，因为它没有方向
     const ambientLight = new AmbientLight(LIGHT_COLOR, 0.5);
-
+    const hemiLight = new HemisphereLight(0x404040, 0x202020, 0.6);
+    const spotLight = new SpotLight(0xffffff, 0.5);
+spotLight.position.set(30, 20, 50);
+spotLight.angle = Math.PI / 3; // 缩小光束角度
+spotLight.penumbra = 0.5; // 增加半影效果，使边缘更
+this.scene.add(spotLight);
     // 平行光，平行光可以投射阴影
     this.shadowLight = new DirectionalLight(LIGHT_COLOR, 0.5);
     // 设定光照源方向，目标默认是原点
@@ -156,6 +164,7 @@ export default class Stage {
 
     this.scene.add(ambientLight);
     this.scene.add(this.shadowLight);
+    this.scene.add(hemiLight);
   }
 
   // 相机

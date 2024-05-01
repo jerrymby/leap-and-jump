@@ -1,5 +1,5 @@
 import Box from './Box';
-import {BoxGeometry, Mesh, MeshLambertMaterial, TextureLoader} from "three";
+import {BoxGeometry, Mesh, MeshPhongMaterial, TextureLoader} from "three";
 import {recreateCubeUV, LEFT, TOP, BEHIND} from '../util/MapUtil';
 import express1 from '../res/images.png';
 
@@ -10,8 +10,12 @@ export default class ExpressBox extends Box {
 
   initBox() {
     const geometry = new BoxGeometry(25, this.height, 25);
-    const material = new MeshLambertMaterial({
+    const material = new MeshPhongMaterial({
       map: new TextureLoader().load(express1),
+      //color: 0xffffff,  // 基础颜色
+      specular: 0xeeeeee,  // 高光部分的颜色
+      shininess: 100,  // 高光的亮度，数值越高高光越亮
+      reflectivity: 0.5  // 反射率
     });
 
     geometry.translate(0, this.height/2, 0);
