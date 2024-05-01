@@ -2,6 +2,7 @@ import {
   SphereGeometry,
   CylinderGeometry,
   MeshLambertMaterial,
+  MeshStandardMaterial,
   Geometry,
   Group,
   Mesh,
@@ -27,7 +28,7 @@ class LittleMan {
     this.stage = stage;
     this.boxGroup = boxGroup;
     // 定义小人的材质，方便复用
-    this.materail = new MeshLambertMaterial({color: LITTLE_MAN_COLOR});
+    this.materail = new MeshStandardMaterial({color: LITTLE_MAN_COLOR, roughness: 1});
     // 头部
     this.head = null;
     // 躯干

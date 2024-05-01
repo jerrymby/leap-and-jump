@@ -1,9 +1,15 @@
 import Box from './Box';
-import {BoxGeometry, Geometry, Mesh, MeshBasicMaterial, TextureLoader} from "three";
+import {BoxGeometry, Geometry, Mesh, MeshBasicMaterial, MeshStandardMaterial, TextureLoader} from "three";
 import {recreateCubeUV, LEFT, TOP, BEHIND, RIGHT} from '../util/MapUtil';
 import box_top from '../res/box_top.png';
 import box_middle from '../res/box_middle.png';
 import box_bottom from '../res/box_bottom.png';
+import box_top_dis from '../res/box_top_dis.png';
+import box_middle_dis from '../res/box_middle_dis.png';
+import box_bottom_dis from '../res/box_bottom_dis.png';
+import box_top_bump from '../res/box_top_bump.png';
+import box_middle_bump from '../res/box_middle_bump.png';
+import box_bottom_bump from '../res/box_bottom_bump.png';
 import TWEEN from '@tweenjs/tween.js';
 import {animateFrame} from "../util/TweenUtil";
 
@@ -14,14 +20,26 @@ export default class MagicCubeBox extends Box {
 
   initBox() {
     const height = this.height / 3;
-    const topMaterial = new MeshBasicMaterial({
-      map: new TextureLoader().load(box_top),
+    const topMaterial = new MeshStandardMaterial({
+      map: new TextureLoader().load(box_top), 
+      bumpMap: new TextureLoader().load(box_top_bump),
+      bumpScale: 1,
+      displacementMap: new TextureLoader().load(box_top_dis),
+      displacementScale: 1,
     });
-    const middleMaterial = new MeshBasicMaterial({
+    const middleMaterial = new MeshStandardMaterial({
       map: new TextureLoader().load(box_middle),
+      bumpMap: new TextureLoader().load(box_middle_bump),
+      bumpScale: 1,
+      displacementMap: new TextureLoader().load(box_middle_dis),
+      displacementScale: 1,
     });
-    const bottomMaterial = new MeshBasicMaterial({
+    const bottomMaterial = new MeshStandardMaterial({
       map: new TextureLoader().load(box_bottom),
+      bumpMap: new TextureLoader().load(box_bottom_bump),
+      displacementScale: 1,
+      displacementMap: new TextureLoader().load(box_bottom_dis),
+      displacementScale: 1,
     });
 
     const topGeometry = new BoxGeometry(this.height * 1.5, height, this.height * 1.5);

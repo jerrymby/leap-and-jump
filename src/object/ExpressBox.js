@@ -1,7 +1,9 @@
 import Box from './Box';
-import {BoxGeometry, Mesh, MeshLambertMaterial, TextureLoader} from "three";
+import {BoxGeometry, Mesh, MeshLambertMaterial, MeshStandardMaterial, TextureLoader} from "three";
 import {recreateCubeUV, LEFT, TOP, BEHIND} from '../util/MapUtil';
 import express from '../res/express.png';
+import express_dis from '../res/express_dis.png';
+import express_bump from '../res/express_bump.png';
 
 export default class ExpressBox extends Box {
   constructor(prev) {
@@ -10,8 +12,12 @@ export default class ExpressBox extends Box {
 
   initBox() {
     const geometry = new BoxGeometry(25, this.height, 25);
-    const material = new MeshLambertMaterial({
+    const material = new MeshStandardMaterial({
       map: new TextureLoader().load(express),
+      bumpMap: new TextureLoader().load(express_bump),
+      bumpScale: 5,
+      displacementMap: new TextureLoader().load(express_dis),
+      displacementScale: 0.1,
     });
 
     geometry.translate(0, this.height/2, 0);
