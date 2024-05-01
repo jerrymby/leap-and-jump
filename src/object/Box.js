@@ -7,7 +7,7 @@ import {
 } from "../config/constant";
 import TWEEN from '@tweenjs/tween.js';
 import {animateFrame} from "../util/TweenUtil";
-
+import { TextureLoader,RepeatWrapping } from 'three';
 class Box {
 
   constructor(prev, cloneMesh) {
@@ -52,7 +52,8 @@ class Box {
     // 随机盒子的大小
     this.initSize();
     // 随机盒子颜色
-    this.initColor();
+    //this.initColor();
+    this.initTexture();
     // 随机下一个盒子的方向
     this.initDirection();
     // 随机下一个盒子的距离
@@ -88,7 +89,24 @@ class Box {
 
     this.color = BOX_COLORS[colorIndex];
   }
+  // 从备选的纹理中随机选择一个
+  initTexture() {
+    const textures = [
+      '../res/images.png',
+      '../res/express.png',
+      '../res/iexpress1.png'
+      // 更多纹理路径
+    ];
 
+    const textureIndex = Math.floor(Math.random() * textures.length);
+    const textureLoader = new TextureLoader();
+
+    // 加载并设置纹理
+    this.texture = textureLoader.load(textures[textureIndex], (tex) => {
+      // 纹理加载完成后的可选回调，例如设置重复属性
+      tex.wrapS = tex.wrapT = RepeatWrapping;
+    });
+  }
   // 方向
   initDirection() {
     // 如果是第一个盒子，下一个一定是 x 方向
