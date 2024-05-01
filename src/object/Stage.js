@@ -10,7 +10,9 @@ import {
   DirectionalLight,
   OrthographicCamera,
   BoxHelper,
-  Vector2
+  Vector2,
+  TextureLoader,
+  RepeatWrapping
 } from 'three';
 
 import {
@@ -32,7 +34,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
-
+import floor from '../res/floor.png';
 import Stats from 'stats.js';
 
 export default class Stage {
@@ -77,13 +79,28 @@ export default class Stage {
   // 场景
   createScene () {
     this.scene = new Scene();
-    this.scene.updateMatrixWorld(true);
-    this.scene.background = new Color(BACKGROUND_COLOR);
-
+    //this.scene.updateMatrixWorld(true);
+    //this.scene.background = new Color(BACKGROUND_COLOR);
+    // 创建一个纹理图片加载器加载图片
+    const textureLoader = new TextureLoader();
+    // 加载背景图片
+    
+    const texture = textureLoader.load(floor);
+    texture.wrapS = texture.wrapT = RepeatWrapping;
+    //texture.wrapS = THREE.RepeatWrapping;
+    //texture.wrapT = THREE.RepeatWrapping;
+    //texture.repeat.set( 2, 2 );
+    
+    // 纹理对象Texture赋值给场景对象的背景属性.background
+    this.scene.background = texture;
+    //this.renderer.render(this.scene, this.camera);
+    //renderer.setSize(WIDTH, HEIGHT, false)
     if (DEV) {
       // 坐标辅助线
       this.scene.add(new AxesHelper(FAR))
     }
+    // 确保 texture 可以在其他函数中访问
+    this.backgroundTexture = texture;
   }
 
   // 地面
@@ -95,7 +112,16 @@ export default class Stage {
     // transparent： 透明，在非透明对象之后渲染
     // opacity: 透明度
     const material = new ShadowMaterial({ transparent: true, opacity: 0.5});
-
+    /*
+    const texture = new THREE.TextureLoader().load(floor); 
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(16, 16);
+    const material = new THREE.ShadowMaterial({
+    map: texture,
+    transparent: true,
+    opacity: 0.50
+    });*/
     this.plane = new Mesh(geometry, material);
     // 接收阴影
     this.plane.receiveShadow = true;
@@ -192,7 +218,15 @@ export default class Stage {
   render () {
     const {scene, camera, renderer, composer, stats} = this;
 
-    function animate() {
+    const animate = () => {
+      requestAnimationFrame(animate);
+      renderer.render(this.scene, this.camera);
+      // 更新纹理的偏移实现移动效果
+      if (this.backgroundTexture) {
+        this.backgroundTexture.offset.x += 1; // 调整这些值以改变移动速度
+        this.backgroundTexture.offset.y += 1;
+      }
+    renderer.render(scene, camera);
       if (DEV) {
         stats.begin();
       }

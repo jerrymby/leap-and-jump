@@ -17,7 +17,7 @@ const ENABLE_AUTO_JUMP = false;
 const ENABLE_DISPOSE_BOX = true;
 
 // 背景色
-const BACKGROUND_COLOR = 0xD6DBDF;
+const BACKGROUND_COLOR = "#" + Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0");
 
 // 白光
 const LIGHT_COLOR = 0xFFFFFF;
@@ -49,7 +49,7 @@ const BLOCK_MIN_DISTANCE = WIDTH > HEIGHT ? HEIGHT/8 : WIDTH/8;
 // 小人的大小，颜色
 const LITTLE_MAN_WIDTH = BLOCK_MIN_SIZE/2.3;
 const LITTLE_MAN_HEIGHT = LITTLE_MAN_WIDTH * 3.5;
-const LITTLE_MAN_COLOR = '#f5222d';
+const LITTLE_MAN_COLOR = "#" + Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6, "0");
 
 // 最大蓄力时间
 const STORAGE_TIME = 1500;
@@ -73,7 +73,7 @@ const TAIL_WIDTH = 1;
 // 拖尾碎片最大高度
 const TAIL_HEIGHT = LITTLE_MAN_WIDTH * 2;
 // 拖尾碎片存在的时间
-const TAIL_DURATION = 70;
+const TAIL_DURATION = 90;
 
 export {
   DEV,
